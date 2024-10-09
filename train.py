@@ -13,7 +13,7 @@ from model import darknet53
 
 
 parser = argparse.ArgumentParser(description='Darknet53 ImageNet Training')
-parser.add_argument('--data', metavar='DIR', help='path to dataset')
+parser.add_argument('--data', metavar='DIR', help='path to dataset', required=True)
 parser.add_argument('--resume', default='', type=str, metavar='PATH', help='path to latest checkpoint (default: none)')
 parser.add_argument('--epochs', default=90, type=int, metavar='N',
                     help='number of total epochs to run')
@@ -40,6 +40,9 @@ parser.add_argument('--gpu', default=None, type=int,
 
 def main():
     args = parser.parse_args()
+
+    if not args.data:
+        raise ValueError("The --data argument is required. Please provide the path to your dataset.")
 
     if args.gpu is not None:
         print("Use GPU: {} for training".format(args.gpu))
@@ -79,7 +82,7 @@ def main():
 
     normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                      std=[0.229, 0.224, 0.225])
-
+    
     train_dataset = datasets.ImageFolder(
         traindir,
         transforms.Compose([

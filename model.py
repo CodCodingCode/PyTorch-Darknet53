@@ -26,7 +26,6 @@ class DarkResidualBlock(nn.Module):
         out += residual
         return out
 
-
 class Darknet53(nn.Module):
     def __init__(self, block, num_classes):
         super(Darknet53, self).__init__()
